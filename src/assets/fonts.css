@@ -1,0 +1,10 @@
+@font-face {
+    font-family: "dyh";
+    src: url('./SourceHanSansSC-Medium.otf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    font-family: "dyh", sans-serif; /* 将字体应用到整个文档 */
+  }
