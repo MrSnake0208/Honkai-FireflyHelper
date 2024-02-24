@@ -1,14 +1,21 @@
-// 引入createRouter
-import RelicAnalyze from "@/components/RelicAnalyze.vue";
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHistory } from 'vue-router'
+import ScoreRuleConfig from "../components/ScoreRuleConfig.vue"
+import RelicAnalyze from "../components/RelicAnalyze.vue"
+
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: "/relic",
-      component: RelicAnalyze,
+      path: '/ScoreRuleConfig',
+      name: 'ScoreRuleConfig',
+      component: ScoreRuleConfig
     },
-  ],
-});
+    {
+      path: '/Analyze',
+      name: 'Analyze',
+      component: RelicAnalyze
+    }
+  ]
+})
 
-export default router;
+export default router

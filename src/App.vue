@@ -1,51 +1,50 @@
 <template>
-  <el-container>
-    <el-header>
-      <h1 class="mb-2">流萤遗器小助手</h1>
-      <el-page-header :icon="ArrowLeft">
-        <template #content>
-          <span class="text-large font-600 mr-3"> Titl12312312e </span>
-        </template>
-      </el-page-header>
-    </el-header>
-    <el-container>
-      <el-aside>
-        <el-menu default-active="1" class="el-menu-vertical-demo" router>
-          <el-menu-item index="1">
-            <template #title>
-              <el-icon><location /></el-icon>
-              <span>首页</span>
-            </template>
-          </el-menu-item>
-          <el-menu-item index="3" disabled>
-            <el-icon><document /></el-icon>
-            <span>使用教程</span>
-          </el-menu-item>
-          <el-menu-item index="/relic">
-            <el-icon><icon-menu /></el-icon>
-            <span>遗器分析</span>
-          </el-menu-item>
-
-          <el-menu-item index="4">
-            <el-icon><setting /></el-icon>
-            <span>设置</span>
-          </el-menu-item>
-        </el-menu>
-      </el-aside>
-      <el-main>
-        <RouterView></RouterView>
-      </el-main>
-    </el-container>
-  </el-container>
+  <el-menu
+    :default-active="activeIndex"
+    class="el-menu-demo"
+    mode="horizontal"
+    router
+    :ellipsis="false"
+    @select="handleSelect"
+  >
+    <el-menu-item index="0">
+      <el-image
+        style="width: 100px; height: 50px"
+        src="/src/assets/icon.png"
+        alt="流萤遗器助手"
+        fit="cover"
+      />
+    </el-menu-item>
+    <div class="flex-grow"></div>
+    <el-menu-item index="/HowToUse">使用教程</el-menu-item>
+    <el-menu-item index="/Analyze">遗器分析</el-menu-item>
+    <el-menu-item index="/ScoreRuleConfig">分析配置</el-menu-item>
+    <el-menu-item index="4">设置</el-menu-item>
+  </el-menu>
+  <RouterView></RouterView>
 </template>
 
 <script setup lang="ts">
-import { ArrowLeft } from "@element-plus/icons-vue";
-import { RouterView } from "vue-router";
+import { RouterView } from 'vue-router'
+
+import { ref } from 'vue'
+
+const activeIndex = ref('1')
+const handleSelect = (key: string, keyPath: string[]) => {
+  console.log(key, keyPath)
+}
+
+import { useScoreRuleStore } from '@/stores/scorerule'
+import { exampleSliders } from '@/components/defaultscorerule'
+const scoreruleStore = useScoreRuleStore()
+if (scoreruleStore.scorerule.length === 0) {
+  localStorage.setItem('scorerule', JSON.stringify(exampleSliders))
+  scoreruleStore.$reset()
+}
 </script>
 
-<style>
-.el-menu-item{
-  font-size: 18px;
+<style scoped>
+.flex-grow {
+  flex-grow: 0;
 }
 </style>

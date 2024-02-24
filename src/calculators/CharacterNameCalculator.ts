@@ -1,0 +1,55 @@
+// NameConverter.ts
+export const convertToChineseCharacterName = (characterName: string): string => {
+    const characterNameMappings: Record<string, string> = {
+        "Himeko": "姬子",
+        "TopazandNumby": "托帕&账账",
+        "Asta": "艾丝妲",
+        "Guinaifen": "桂乃芬",
+        "Hook": "虎克",
+        "Gallagher": "加拉赫",
+        "Gepard": "杰帕德",
+        "Jingliu": "镜流",
+        "RuanMei": "阮•梅",
+        "Yanqing": "彦卿",
+        "Herta": "黑塔",
+        "March7th": "三月七",
+        "Misha": "米沙",
+        "Pela": "佩拉",
+        "DanHengImbibitorLunae": "丹恒•饮月",
+        "Dr.Ratio": "真理医生",
+        "Luocha": "罗刹",
+        "Welt": "瓦尔特",
+        "Yukong": "驭空",
+        "Aventurine": "砂金",
+        "Bailu": "白露",
+        "JingYuan": "景元",
+        "Kafka": "卡芙卡",
+        "Arlan": "阿兰",
+        "Serval": "希露瓦",
+        "Tingyun": "停云",
+        "Acheron": "黄泉",
+        "Argenti": "银枝",
+        "Clara": "克拉拉",
+        "Hanya": "寒鸦",
+        "Luka": "卢卡",
+        "Natasha": "娜塔莎",
+        "Sushang": "素裳",
+        "FuXuan": "符玄",
+        "Seele": "希儿",
+        "SilverWolf": "银狼",
+        "Lynx": "玲可",
+        "Qingque": "青雀",
+        "Xueyi": "雪衣",
+        "Sparkle": "花火",
+        "BlackSwan": "黑天鹅",
+        "Blade": "刃",
+        "Bronya": "布洛妮娅",
+        "Huohuo": "藿藿",
+        "DanHeng": "丹恒",
+        "Sampo": "桑博"
+      // 添加更多属性名与对应的中文名映射
+    }
+  
+    return characterNameMappings[characterName] || '无人佩戴'
+  }
+  
