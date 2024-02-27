@@ -26,7 +26,13 @@ export const calScore =(stat:any,name:any,position:any,level:any, isMain:boolean
         if (["head", "hands"].includes(position)) {
             return 0
         } else if (["body", "planarSphere"].includes(position)) {
-            return Math.round((0.66 * level +5.83*scorerules.value[name][stat.name])*100) / 100
+            if(scorerules.value[name][stat.name] === 0 ){
+                return 0
+            }
+            else{
+                return Math.round((0.66 * level +5.83*scorerules.value[name][stat.name])*100) / 100
+            }
+
         } else {
             return Math.round((5.83*scorerules.value[name][stat.name])*100) / 100
         }

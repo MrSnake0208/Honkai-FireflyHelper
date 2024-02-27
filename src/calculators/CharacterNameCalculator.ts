@@ -16,7 +16,7 @@ export const convertToChineseCharacterName = (characterName: string): string => 
         "Misha": "米沙",
         "Pela": "佩拉",
         "DanHengImbibitorLunae": "丹恒•饮月",
-        "Dr.Ratio": "真理医生",
+        "DrRatio": "真理医生",
         "Luocha": "罗刹",
         "Welt": "瓦尔特",
         "Yukong": "驭空",

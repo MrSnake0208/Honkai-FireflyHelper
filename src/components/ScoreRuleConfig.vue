@@ -13,6 +13,7 @@
     >
     </el-option>
   </el-select>
+  <el-button type="primary" @click="toSync" :icon="Download">更新数据</el-button>
   <div
     v-for="(item, index) in scorerules[selectedScoreRule]"
     :key="index"
@@ -34,20 +35,30 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Delete, Edit, Search, Share, Upload } from '@element-plus/icons-vue'
+import { Delete, Edit, Search, Share, Upload, Download } from '@element-plus/icons-vue'
 import { useScoreRuleStore } from '@/stores/scorerule'
 import { storeToRefs } from 'pinia'
 // import { type IScoreRule } from '@/types/scorerule'
 import { convertToChineseStatName } from '@/calculators/StatNameCalculator'
 import { convertToChineseCharacterName } from '@/calculators/CharacterNameCalculator'
+import { useRelicStore } from '@/stores/relic'
+import { exampleSliders } from '@/components/defaultscorerule'
 const scoreruleStore = useScoreRuleStore()
 const scorerules = storeToRefs(scoreruleStore).scorerule
-const selectedScoreRule = ref()
+
+const relicStore = useRelicStore()
+const { selectedScoreRule } = storeToRefs(relicStore)
+
 function toRest() {
   const scorerulejson = JSON.parse(localStorage.getItem('scorerule') as string) || []
   // const tobechanged = selectedScoreRule.value
   scorerulejson[selectedScoreRule.value] = scorerules.value[selectedScoreRule.value]
   localStorage.setItem('scorerule', JSON.stringify(scorerulejson))
+}
+
+function toSync() {
+  localStorage.setItem('scorerule', JSON.stringify(exampleSliders))
+  scoreruleStore.$reset()
 }
 
 function toSave() {

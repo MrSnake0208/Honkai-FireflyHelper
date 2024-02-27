@@ -79,7 +79,6 @@
                     >{{ convertToChineseName(headInfo.setName, headInfo.position) }} +{{
                       headInfo.level
                     }}
-                    {{ headInfo.setName }}
                   </span>
                   <br />
                   <span class="sumscore">{{ getSumScore(headInfo) }}分</span>
@@ -132,7 +131,7 @@
 <script lang="ts" setup>
 import { ref, computed } from 'vue'
 
-import type { UploadInstance, UploadProps, UploadRawFile, formContextKey } from 'element-plus'
+import type { UploadInstance, UploadProps, UploadRawFile } from 'element-plus'
 
 // import { IRelicContentOnly } from '@/types/relic'
 
