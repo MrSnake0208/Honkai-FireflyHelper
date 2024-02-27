@@ -26,6 +26,6 @@ export default defineConfig({
   server: {
     host: 'localhost',
     port: 40405,
-    open: true
+    open: false
 }
 })
