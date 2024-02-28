@@ -1,5 +1,5 @@
 import {defineStore} from "pinia"
-import { calScore } from '@/calculators/scorecalculator'
+
 
 export const useRelicStore =defineStore("relic",{
     state(){
@@ -22,19 +22,8 @@ export const useRelicStore =defineStore("relic",{
             return meetsCondition;
           });
         },
-        // caledRelics(){
-        //     this.filteredRelics.forEach(element => {
-        //         // const sum = 0
-        //         element.mainTag.score = calScore(element.mainTag,this.selectedScoreRule)
-        //         // sum += element.mainTag.score
-        //         element.normalTags.forEach(normaltag =>{
-        //             normaltag.score = calScore(normaltag,this.selectedScoreRule)
-        //             // sum +=normaltag.score
-        //         })
-        //         // element.sumScore = sum
-        //     });
-        //     return filteredRelics
-
-        // }
       }
 })
+
+
+

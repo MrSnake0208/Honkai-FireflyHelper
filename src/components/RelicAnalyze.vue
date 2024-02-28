@@ -65,48 +65,52 @@
         </el-tab-pane>
       </el-tabs>
       <el-container class="cards">
-        <div v-for="headInfo in filteredRelics" :key="headInfo" class="text item">
+        <div v-for="RelicSingle in customSort(filteredRelics)" :key="RelicSingle" class="text item">
           <el-card class="box-card">
             <template #header>
               <div class="card-header">
                 <el-avatar
                   :size="45"
                   style="flex-shrink: 0"
-                  :src="getRelicImageSrc(headInfo)"
+                  :src="getRelicImageSrc(RelicSingle)"
                 ></el-avatar>
                 <div class="card-header-text">
                   <span class="relic-info"
-                    >{{ convertToChineseName(headInfo.setName, headInfo.position) }} +{{
-                      headInfo.level
+                    >{{ convertToChineseName(RelicSingle.setName, RelicSingle.position) }} +{{
+                      RelicSingle.level
                     }}
                   </span>
                   <br />
-                  <span class="sumscore">{{ getSumScore(headInfo) }}分</span>
+                  <span class="sumscore" :style="{ color: getTextColor(RelicSingle) }"
+                    >{{ getSumScore(RelicSingle) }}分</span
+                  >
                 </div>
               </div>
             </template>
             <div class="normaltagscontainer">
               <div class="maintag-info">
-                {{ convertToChineseStatName(headInfo.mainTag.name) }}
-                {{ Math.round(headInfo.mainTag.value * 100) / 100 }}
+                {{ convertToChineseStatName(RelicSingle.mainTag.name) }}:
+                {{ convertValue(RelicSingle.mainTag.name, RelicSingle.mainTag.value) }}
               </div>
               <div class="tagscore">
                 {{
                   calScore(
-                    headInfo.mainTag,
+                    RelicSingle.mainTag,
                     selectedScoreRule,
-                    headInfo.position,
-                    headInfo.level,
+                    RelicSingle.position,
+                    RelicSingle.level,
                     true
                   )
                 }}
               </div>
             </div>
 
-            <div v-for="tag in headInfo.normalTags" :key="tag.name" class="normaltagscontainer">
-              {{ convertToChineseStatName(tag.name) }}: {{ Math.round(tag.value * 100) / 100 }}
+            <div v-for="tag in RelicSingle.normalTags" :key="tag.name" class="normaltagscontainer">
+              {{ convertToChineseStatName(tag.name) }}: {{ convertValue(tag.name, tag.value) }}
               <div class="tagscore">
-                {{ calScore(tag, selectedScoreRule, headInfo.position, headInfo.level, false) }}
+                {{
+                  calScore(tag, selectedScoreRule, RelicSingle.position, RelicSingle.level, false)
+                }}
               </div>
             </div>
             <template #footer>
@@ -114,10 +118,10 @@
                 <el-avatar
                   style="vertical-align: middle"
                   :size="40"
-                  :src="getCharacterImageSrc(headInfo)"
+                  :src="getCharacterImageSrc(RelicSingle)"
                 ></el-avatar>
                 <span style="vertical-align: middle">{{
-                  convertToChineseCharacterName(headInfo.equip)
+                  convertToChineseCharacterName(RelicSingle.equip)
                 }}</span>
               </div>
             </template>
@@ -136,13 +140,14 @@ import type { UploadInstance, UploadProps, UploadRawFile } from 'element-plus'
 // import { IRelicContentOnly } from '@/types/relic'
 
 import { storeToRefs } from 'pinia'
-import { genFileId } from 'element-plus'
+import { countdownEmits, genFileId } from 'element-plus'
 import { useScoreRuleStore } from '@/stores/scorerule'
 import { convertToChineseCharacterName } from '@/calculators/CharacterNameCalculator'
 import { convertToChineseName } from '@/calculators/RelicNameCalculator'
 import { convertToChineseStatName } from '@/calculators/StatNameCalculator'
 import { useRelicStore } from '@/stores/relic'
 import { calScore } from '@/calculators/scorecalculator'
+import { convertValue } from '@/calculators/StatValueCalculator'
 
 const scoreruleStore = useScoreRuleStore()
 const scorerules = storeToRefs(scoreruleStore).scorerule
@@ -156,7 +161,7 @@ const {
   selectedScoreRule,
   relicList
 } = storeToRefs(relicStore)
-
+let sortedRelics = ref([])
 import bodyIcon from '@/assets/BODY.png'
 import footIcon from '@/assets/FOOT.png'
 import handIcon from '@/assets/HAND.png'
@@ -276,9 +281,40 @@ function getSumScore(relicinfo: any) {
   return sum
 }
 function uploadHttpRequest() {}
+
+function customSort(filteredRelics: any) {
+  filteredRelics.sort((a: any, b: any) => {
+    // 使用 getSumScore 方法计算总分，然后进行比较
+    const scoreA = getSumScore(a)
+    const scoreB = getSumScore(b)
+    return scoreB - scoreA
+  })
+  return filteredRelics
+}
+const props = defineProps(['RelicSingle'])
+function getTextColor(relieinfo: any) {
+  // 根据数据的大小返回不同的颜色
+  const sumScore = getSumScore(relieinfo)
+  if (sumScore < 10) {
+    return '#7f8c8d'
+  } else if (sumScore < 20) {
+    return '#27ae60'
+  } else if (sumScore < 30) {
+    return '#2980b9'
+  } else if (sumScore < 40) {
+    return '#8e44ad'
+  } else if (sumScore < 50) {
+    return '#f1c40f'
+  } else {
+    return '#c0392b'
+  }
+}
 </script>
 
 <style scoped>
+body {
+  font-family: PingFang SC;
+}
 .sumscore {
   margin-left: 10px;
 }
@@ -357,5 +393,13 @@ function uploadHttpRequest() {}
   background-color: #303133;
   color: aliceblue;
   padding: 1px 10px;
+}
+
+.red-text {
+  color: red;
+}
+
+.blue-text {
+  color: blue;
 }
 </style>

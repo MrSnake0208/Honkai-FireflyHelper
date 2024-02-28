@@ -1,6 +1,7 @@
 import { useScoreRuleStore } from '@/stores/scorerule'
 import { storeToRefs } from 'pinia'
 
+
 const essCoefficient = {
     hp: 0.153 * 0.5,
     hp_: 1.5 * 100,
@@ -21,7 +22,7 @@ const essCoefficient = {
 export const calScore =(stat:any,name:any,position:any,level:any, isMain:boolean) =>{
     const scoreruleStore = useScoreRuleStore()
     const scorerules = storeToRefs(scoreruleStore).scorerule
-    console.log(position)
+    // console.log(position)
     if (isMain){
         if (["head", "hands"].includes(position)) {
             return 0
